@@ -1,3 +1,5 @@
+'use strict';
+
 const templates = {
   books: Handlebars.compile(document.querySelector('#template-book').innerHTML),
 };
@@ -16,28 +18,43 @@ function render() {
 
 render();
 
+
 const favoriteBooks = [];
 
-function initActions(){
+const booksImages = booksList.querySelectorAll('.book__image');
 
-  const booksImages = booksList.querySelectorAll('.book__image');
+const initActions = function(){      
 
   for(let bookImage of booksImages){
+    
     bookImage.addEventListener('dblclick', function(event){
       event.preventDefault();
-      bookImage.classList.add('favorite');
-      const dataId = bookImage.getAttribute('data-id');
       
-      if(bookImage.classList.contains('favorite')){
-        
-        console.log('data ID:', dataId);
+      const clickedElement = this;
+      console.log('clickedelement:', clickedElement);
+
+      const dataId = clickedElement.getAttribute('data-id');
+      const indexOfdataId = favoriteBooks.indexOf(dataId);
+      
+
+      if(!clickedElement.classList.contains('favorite')){
+        clickedElement.classList.add('favorite');
         favoriteBooks.push(dataId);
-      }      
+      } else {
+
+        clickedElement.classList.remove('favorite'); 
+        favoriteBooks.splice(indexOfdataId, 1);      
+          
+      }
+
+      console.log('Favorite Books:', favoriteBooks);
+      console.log('test:', indexOfdataId);
+          
     }); 
   }  
   return favoriteBooks;
-}
+};
 
 initActions();
-console.log('Favorite Books:', favoriteBooks);
+
 
