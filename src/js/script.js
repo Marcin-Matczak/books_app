@@ -15,3 +15,29 @@ function render() {
 }
 
 render();
+
+const favoriteBooks = [];
+
+function initActions(){
+
+  const booksImages = booksList.querySelectorAll('.book__image');
+
+  for(let bookImage of booksImages){
+    bookImage.addEventListener('dblclick', function(event){
+      event.preventDefault();
+      bookImage.classList.add('favorite');
+      const dataId = bookImage.getAttribute('data-id');
+      
+      if(bookImage.classList.contains('favorite')){
+        
+        console.log('data ID:', dataId);
+        favoriteBooks.push(dataId);
+      }      
+    }); 
+  }  
+  return favoriteBooks;
+}
+
+initActions();
+console.log('Favorite Books:', favoriteBooks);
+
